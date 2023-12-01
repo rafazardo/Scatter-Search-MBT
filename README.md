@@ -33,6 +33,10 @@ Acessar o diretório de arquivos:
 
 Em seguida, compilar o programa da seguinte maneira:
 
+` g++ scatterSearch.cpp -std=c++11 -O3 `
+
+Em seguida, basta executar o executador gerado normalmente, sem nenhuma parâmetro de inicialização
+
 ## Resultados
 
 Os resultados serão armazenados na pasta:
@@ -42,10 +46,3 @@ Os resultados serão armazenados na pasta:
 As soluções serão armazenados na Soluções:
 
 ` Algoritimos > Soluções `
-
-
-
-` g++ scatterSearch.cpp -std=c++11 -O3 `
-
-Em seguida, basta executar o executador gerado normalmente, sem nenhuma parâmetro de inicialização
-
