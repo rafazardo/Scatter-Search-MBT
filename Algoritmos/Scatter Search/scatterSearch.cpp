@@ -1,3 +1,7 @@
+/*
+Essa versão contém:
+    - Reprodução Path relinking com first improvement
+*/
 
 #include <iostream>
 #include <vector>
@@ -10,7 +14,7 @@
 using namespace std;
 
 int TAMANHO_POPULACAO_INICIAL = 1000;
-int TAMANHO_CONJUNTO_REFERENCIA = 15;
+int TAMANHO_CONJUNTO_REFERENCIA = 10;
 
 int TOTAL_INDIVIDUOS_GERADOS = 0;
 vector<int> VERTICES_INICIAIS;
@@ -399,7 +403,7 @@ vector<Individuo> encontrarConjuntoReferencia(vector<Individuo> &populacao, int 
         for (int i = 0; i < populacao.size(); i++) {
             Individuo individuo = individuosOrdenadosTempo[i];
 
-            if (!estaNoConjuntoReferencia(conjuntoReferencia, individuo)) {
+            if (!estaNoConjuntoReferencia(conjuntoReferencia, individuo)) { // parece desnecessário
                 int minDist = gerarMinDist(individuo, conjuntoReferencia);
 
                 if (minDist > maior) {
@@ -539,7 +543,7 @@ vector<Individuo> gerarFilhos(vector<pair<Individuo, Individuo> > &pais, int cnt
             }
 
             Individuo filho(cromossomoFilho);
-            filhos.push_back(filho);
+            filhos.push_back(filho); // Trocar para ponteiro
             TOTAL_INDIVIDUOS_GERADOS++;
         }
 
@@ -570,7 +574,7 @@ vector<Individuo> gerarFilhos(vector<pair<Individuo, Individuo> > &pais, int cnt
             filhos.push_back(filho);
             TOTAL_INDIVIDUOS_GERADOS++;
         } 
-    } else if (cntIteracoesSemMelhora == 3) { // Crossover com busca local
+    } else if (cntIteracoesSemMelhora == 3) { // Crossover com busca local First Improvement
         // Fazer busca local com a solução dos pais
         for(int i = 0; i < pais.size(); i++) {
             pair<vector<int>, int> solucaoMelhorada1 = buscaLocal(pais[i].first.solucao, pais[i].first.tempo);
@@ -617,7 +621,7 @@ vector<Individuo> gerarFilhos(vector<pair<Individuo, Individuo> > &pais, int cnt
     return filhos;
 }
 
-// Se algum filho for melhor que solução no conjunto de referência, ele entra para o conjunto na posição mais elevada que conseguir, retirando o indivíduo que lá estava
+// Se algum filho for melhor que solução no conjunto de referência, ele entra para o conjunto na primeira posição que conseguir, retirando o indivíduo que lá estava
 void atualizarConjuntoReferencia(vector<Individuo> &conjuntoReferencia, vector<Individuo> &filhos) {
     for (Individuo filho : filhos) {
         bool achou = false;
@@ -790,25 +794,22 @@ void salvarInformacoesEmArquivo(double melhorTempo, std::chrono::duration<double
 
 int main() {
     vector<string> arquivos;
-
-    // Caso nao queira realizar um experimento, basta comentar a linha
-
-    arquivos.push_back("Harari/H10_30");
-    arquivos.push_back("Harari/H11_50");
-    arquivos.push_back("Harari/H20_50");
-    arquivos.push_back("Harari/H21_50");
-    arquivos.push_back("Harari/H2_100");
-    arquivos.push_back("Harari/H2_17");
-    arquivos.push_back("Harari/H2_30");
-    arquivos.push_back("Harari/H2_50");
-    arquivos.push_back("Harari/H3_17");
-    arquivos.push_back("Harari/H3_30");
-    arquivos.push_back("Harari/H3_50");
-    arquivos.push_back("Harari/H5_17");
-    arquivos.push_back("Harari/H6_17");
-    arquivos.push_back("Harari/H7_17");
-    arquivos.push_back("Harari/H8_30");
-    arquivos.push_back("Harari/H9_30");
+    // arquivos.push_back("Harari/H10_30");
+    // arquivos.push_back("Harari/H11_50");
+    // arquivos.push_back("Harari/H20_50");
+    // arquivos.push_back("Harari/H21_50");
+    // arquivos.push_back("Harari/H2_100");
+    // arquivos.push_back("Harari/H2_17");
+    // arquivos.push_back("Harari/H2_30");
+    // arquivos.push_back("Harari/H2_50");
+    // arquivos.push_back("Harari/H3_17");
+    // arquivos.push_back("Harari/H3_30");
+    // arquivos.push_back("Harari/H3_50");
+    // arquivos.push_back("Harari/H5_17");
+    // arquivos.push_back("Harari/H6_17");
+    // arquivos.push_back("Harari/H7_17");
+    // arquivos.push_back("Harari/H8_30");
+    // arquivos.push_back("Harari/H9_30");
 
     arquivos.push_back("SmallWorld/SW-100-3-0d1-trial1");
     arquivos.push_back("SmallWorld/SW-100-3-0d2-trial1");
